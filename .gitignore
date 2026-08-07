@@ -1,0 +1,27 @@
+# --- Private planning kit (lives in billdmar/proforma-kit, NEVER in the public project repo) ---
+MISSION.md
+START-HERE.md
+proforma-claude-code-build-kit.md
+HANDOFF.md
+CLAUDE.md
+
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Build outputs (intermediates ignored; final deliverables go under releases/ and ARE committed) ---
+out/*
+!out/.gitkeep
+
+# --- OS / editor ---
+.DS_Store
+*.swp
+.idea/
+.vscode/
