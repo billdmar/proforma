@@ -154,7 +154,7 @@ def test_all_cash_debt_funded_accretion():
     da = DealAssumptions(new_debt=5000.0, new_debt_rate=0.05, marginal_tax_rate=0.20)
 
     b = ENGINE.combine(acquirer, target, deal, da, _no_synergy()).eps_bridge[0]
-    assert b.incremental_interest_expense == pytest.approx(250.0)  # stored pre-tax
+    assert b.incremental_interest_aftertax == pytest.approx(200.0)  # 250 pre-tax × (1 − 0.20)
     assert b.pro_forma_net_income == pytest.approx(1200.0)
     assert b.pro_forma_eps == pytest.approx(12.0)
     assert b.accretion_dilution_pct == pytest.approx(0.20)
@@ -183,7 +183,7 @@ def test_foregone_cash_yield_reduces_income():
     da = DealAssumptions(cash_on_hand_used=2000.0, foregone_cash_yield=0.03, marginal_tax_rate=0.20)
 
     b = ENGINE.combine(acquirer, target, deal, da, _no_synergy()).eps_bridge[0]
-    assert b.foregone_interest_income == pytest.approx(60.0)
+    assert b.foregone_interest_aftertax == pytest.approx(48.0)  # 60 pre-tax × (1 − 0.20)
     assert b.pro_forma_net_income == pytest.approx(1352.0)
 
 
@@ -251,12 +251,12 @@ def test_eps_bridge_recompute_to_the_cent():
     syn = SynergyCase(name="s", run_rate_annual=300.0, phase_in=[0.5, 1.0, 1.0])
 
     for b in ENGINE.combine(acquirer, target, deal, da, syn).eps_bridge:
-        t = 0.20
+        # All legs are stored after-tax → a pure additive walk.
         recomputed_ni = (
             b.acquirer_standalone_ni
             + b.target_standalone_ni
-            - b.incremental_interest_expense * (1 - t)
-            - b.foregone_interest_income * (1 - t)
+            - b.incremental_interest_aftertax
+            - b.foregone_interest_aftertax
             - b.incremental_da_aftertax
             + b.synergies_aftertax
         )

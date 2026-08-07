@@ -12,8 +12,8 @@ Tax convention (deliberate — matches the frozen EPSBridge contract):
     taxed, at ``deal_assumptions.marginal_tax_rate``:
 
         pro forma NI = acquirer_standalone_ni + target_standalone_ni
-                       − incremental_interest_expense × (1 − t)   [new-debt coupon]
-                       − foregone_interest_income   × (1 − t)   [yield on cash used]
+                       − incremental_interest_aftertax           [new-debt coupon × (1 − t)]
+                       − foregone_interest_aftertax              [cash yield × (1 − t)]
                        − incremental_da_aftertax                 [step-up D&A, after tax]
                        + synergies_aftertax                      [realized synergies, after tax]
 
@@ -116,11 +116,17 @@ class CombinationEngine:
             synergies_pretax = synergies.realized(j)
             synergies_aftertax = synergies_pretax * one_minus_t
 
+            # All adjustment legs after-tax: the bridge is a pure additive walk
+            # and the workbook reproduces it cell-for-cell (interest is
+            # tax-deductible, so its NI impact is coupon × (1 − t)).
+            incr_interest_aftertax = incr_interest * one_minus_t
+            foregone_income_aftertax = foregone_income * one_minus_t
+
             pro_forma_ni = (
                 acq_ni
                 + tgt_ni
-                - incr_interest * one_minus_t
-                - foregone_income * one_minus_t
+                - incr_interest_aftertax
+                - foregone_income_aftertax
                 - incr_da_aftertax
                 + synergies_aftertax
             )
@@ -135,8 +141,8 @@ class CombinationEngine:
                     year=period,
                     acquirer_standalone_ni=acq_ni,
                     target_standalone_ni=tgt_ni,
-                    incremental_interest_expense=incr_interest,
-                    foregone_interest_income=foregone_income,
+                    incremental_interest_aftertax=incr_interest_aftertax,
+                    foregone_interest_aftertax=foregone_income_aftertax,
                     incremental_da_aftertax=incr_da_aftertax,
                     synergies_aftertax=synergies_aftertax,
                     pro_forma_net_income=pro_forma_ni,

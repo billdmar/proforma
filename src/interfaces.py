@@ -439,8 +439,12 @@ class EPSBridge:
     year: Period
     acquirer_standalone_ni: float
     target_standalone_ni: float
-    incremental_interest_expense: float  # on new debt (positive; subtracted)
-    foregone_interest_income: float  # on cash used (positive; subtracted)
+    # All four adjustment legs are stored AFTER-TAX so the bridge is a pure
+    # additive walk to pro forma NI (acq + tgt − int − foregone − D&A + syn) and
+    # the workbook mirrors it cell-for-cell. Interest is tax-deductible, so its
+    # net-income impact is coupon × (1 − t); likewise the foregone cash yield.
+    incremental_interest_aftertax: float  # on new debt, after tax (positive; subtracted)
+    foregone_interest_aftertax: float  # on cash used, after tax (positive; subtracted)
     incremental_da_aftertax: float  # step-up amortization, after tax (subtracted)
     synergies_aftertax: float  # realized synergies, after tax (added)
     pro_forma_net_income: float

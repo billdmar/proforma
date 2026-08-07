@@ -382,8 +382,18 @@ class ExcelWorkbookWriter:
         rows = [
             (4, "Acquirer standalone net income", lambda b: b.acquirer_standalone_ni, "acq_ni"),
             (5, "Target standalone net income", lambda b: b.target_standalone_ni, "tgt_ni"),
-            (6, "Less: incremental interest", lambda b: b.incremental_interest_expense, "int"),
-            (7, "Less: foregone interest income", lambda b: b.foregone_interest_income, "fore"),
+            (
+                6,
+                "Less: incremental interest (after-tax)",
+                lambda b: b.incremental_interest_aftertax,
+                "int",
+            ),
+            (
+                7,
+                "Less: foregone interest income (after-tax)",
+                lambda b: b.foregone_interest_aftertax,
+                "fore",
+            ),
             (8, "Less: incremental D&A (after-tax)", lambda b: b.incremental_da_aftertax, "da"),
             (9, "Plus: synergies (after-tax)", lambda b: b.synergies_aftertax, "syn"),
         ]

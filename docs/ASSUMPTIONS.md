@@ -54,6 +54,21 @@ target for the G1 tie-out.
 
 ---
 
+## G1 machinery notes (resolved / carried to W2)
+- **EPS-bridge tax convention (resolved at G1).** All four pro forma adjustment
+  legs — incremental interest, foregone interest income, step-up D&A, synergies —
+  are stored **after-tax** in `EPSBridge`, so the bridge is a pure additive walk
+  to pro forma net income and the workbook reproduces it cell-for-cell.
+  (Interest is tax-deductible, so its net-income impact is coupon × (1 − t).) A
+  financed-deal differential test (`test_financed_deal_differential_to_the_cent`)
+  proves the workbook↔engine match to the cent with non-zero interest legs.
+- **W2 constraint — target projected equity.** The combination engine layers
+  static day-1 purchase-accounting adjustments each period, so the pro forma
+  balance sheet balances every year only when the target's projected total
+  equity ties to its reported equity (e.g. dividends absorb net income). The
+  flagship model must set the target's payout/equity handling accordingly, or
+  extend the engine, so the BS-balance invariant holds across the horizon.
+
 ## 3. Our modeling assumptions (OURS — set by ORCH at W2)
 _To be filled at W2 with 2–4 line rationales each: standalone drivers for both
 companies; financing structure (new debt / rate / cash used / fees); PPA choices
