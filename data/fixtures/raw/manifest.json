@@ -1,0 +1,346 @@
+{
+  "companies": {
+    "SNPS": "0000883241",
+    "ANSS": "0001013462"
+  },
+  "user_agent": "proforma-research billdmar@gmail.com",
+  "announce_date": "2024-01-16",
+  "raw_files": [
+    "company_tickers.json",
+    "companyfacts_ANSS_0001013462.json",
+    "companyfacts_SNPS_0000883241.json",
+    "submissions_ANSS_0001013462.json",
+    "submissions_SNPS_0000883241.json"
+  ],
+  "documents": [
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-05-27",
+      "accession": "0001193125-26-241920",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526241920/d96543d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-05-27",
+      "accession": "0001193125-26-241911",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526241911/d126227d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-04-20",
+      "accession": "0001193125-26-164085",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526164085/d467081d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-03-02",
+      "accession": "0001193125-26-084396",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526084396/d113900d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-02-25",
+      "accession": "0001193125-26-071601",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526071601/d921168d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEFA14A",
+      "filed": "2026-02-19",
+      "accession": "0000883241-26-000008",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324126000008/a2026proxystatementdefa14a.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEF 14A",
+      "filed": "2026-02-19",
+      "accession": "0000883241-26-000007",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324126000007/snps-20260219.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2026-02-19",
+      "accession": "0001193125-26-059438",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312526059438/d78071d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2025-12-10",
+      "accession": "0001193125-25-314200",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K",
+      "filed": "2025-12-01",
+      "accession": "0001193125-25-303209",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525303209/d36680d8k.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "8-K/A",
+      "filed": "2025-09-18",
+      "accession": "0001193125-25-207472",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525207472/d948279d8ka.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-07-17",
+      "accession": "0001140361-25-026144",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036125026144/ef20052066_425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-07-17",
+      "accession": "0001140361-25-026140",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036125026140/ef20051970_425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-07-14",
+      "accession": "0001193125-25-158652",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525158652/d906938d425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-07-14",
+      "accession": "0001193125-25-158491",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525158491/d800809d425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-06-30",
+      "accession": "0001193125-25-152110",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525152110/d917691d425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-06-30",
+      "accession": "0001140361-25-024106",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036125024106/ef20051349_425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-03-05",
+      "accession": "0001140361-25-007208",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036125007208/ny20044174x8_425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "425",
+      "filed": "2025-02-27",
+      "accession": "0001140361-25-006324",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036125006324/ny20044174x3_425.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEFA14A",
+      "filed": "2025-02-14",
+      "accession": "0000883241-25-000009",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000009/a2025proxystatementdefa14a.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEF 14A",
+      "filed": "2025-02-14",
+      "accession": "0000883241-25-000008",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000008/snps-20250214.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "S-4/A",
+      "filed": "2024-04-11",
+      "accession": "0001140361-24-019383",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036124019383/ny20023075x2_s4a.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEFA14A",
+      "filed": "2024-03-25",
+      "accession": "0001193125-24-076468",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312524076468/d814976ddefa14a.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "S-4",
+      "filed": "2024-03-14",
+      "accession": "0001140361-24-013120",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000114036124013120/ny20023075x1_s4.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEFA14A",
+      "filed": "2024-02-16",
+      "accession": "0000883241-24-000008",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324124000008/a2024proxystatement-addlma.htm"
+    },
+    {
+      "ticker": "SNPS",
+      "form": "DEF 14A",
+      "filed": "2024-02-16",
+      "accession": "0000883241-24-000006",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324124000006/snps-20240216.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-07-17",
+      "accession": "0001140361-25-026144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125026144/ef20052066_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2025-07-17",
+      "accession": "0001140361-25-026141",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125026141/ef20052066_8k.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-07-17",
+      "accession": "0001140361-25-026140",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125026140/ef20051970_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-07-14",
+      "accession": "0001193125-25-158652",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000119312525158652/d906938d425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2025-07-01",
+      "accession": "0001628280-25-033778",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000162828025033778/anss-20250627.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-06-30",
+      "accession": "0001193125-25-152110",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000119312525152110/d917691d425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-06-30",
+      "accession": "0001140361-25-024106",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125024106/ef20051349_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2025-04-30",
+      "accession": "0001013462-25-000016",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000016/anss-20250430.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "DEFA14A",
+      "filed": "2025-04-29",
+      "accession": "0001104659-25-041182",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000110465925041182/tm252293d3_defa14a.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "DEF 14A",
+      "filed": "2025-04-29",
+      "accession": "0001104659-25-041176",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000110465925041176/tm252293-2_def14a.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-03-05",
+      "accession": "0001140361-25-007208",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125007208/ny20044174x8_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-02-27",
+      "accession": "0001140361-25-006324",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125006324/ny20044174x3_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2025-02-19",
+      "accession": "0001013462-25-000008",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000008/anss-20250219.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "425",
+      "filed": "2025-01-10",
+      "accession": "0001140361-25-000840",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036125000840/ef20041421_425.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2024-12-27",
+      "accession": "0001140361-24-050489",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036124050489/ef20040675_8k.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2024-11-06",
+      "accession": "0001013462-24-000027",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000101346224000027/anss-20241106.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2024-07-31",
+      "accession": "0001013462-24-000023",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000101346224000023/anss-20240731.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "8-K",
+      "filed": "2024-07-12",
+      "accession": "0001140361-24-033058",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036124033058/ef20032436_8k.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "DEFM14A",
+      "filed": "2024-04-17",
+      "accession": "0001140361-24-020334",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000114036124020334/ny20025601x1_defm14a.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "DEFA14A",
+      "filed": "2024-04-10",
+      "accession": "0001104659-24-045822",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000110465924045822/tm2328737d5_defa14a.htm"
+    },
+    {
+      "ticker": "ANSS",
+      "form": "DEF 14A",
+      "filed": "2024-04-10",
+      "accession": "0001104659-24-045818",
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000110465924045818/tm2328737d4_def14a.htm"
+    }
+  ]
+}
