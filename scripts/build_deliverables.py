@@ -36,7 +36,11 @@ from pathlib import Path  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.flagship import AS_OF, build_flagship_bundle  # noqa: E402
+from src.flagship_csco_splk import (  # noqa: E402
+    build_flagship_bundle as build_csco_splk_bundle,
+)
 from src.narrative import SNPS_ANSS_NARRATIVE  # noqa: E402
+from src.narrative_csco_splk import CSCO_SPLK_NARRATIVE  # noqa: E402
 from src.report import render_memo  # noqa: E402
 from src.workbook import ExcelWorkbookWriter, cache_formula_values  # noqa: E402
 
@@ -48,11 +52,26 @@ DOCS = ROOT / "docs"
 DOCS_IMG = DOCS / "img"
 PRECEDENTS_CSV = ROOT / "data" / "curated" / "precedents_software.csv"
 
-XLSX_NAME = "SNPS_ANSS_merger_model.xlsx"
-PDF_NAME = "SNPS_ANSS_deal_memo.pdf"
-# Hero charts surfaced on the README (rendered into out/assets by the memo
-# pipeline; copied to docs/img so they render on GitHub without a build).
-HERO_CHARTS = ("accretion_by_year.png", "target_football.png")
+# One entry per deal. Deal #1 (Synopsys/ANSYS) supplies the README hero charts;
+# deal #2 (Cisco/Splunk) is the P6 generality proof through the same engine.
+DEALS = {
+    "snps_anss": {
+        "build": build_flagship_bundle,
+        "narrative": SNPS_ANSS_NARRATIVE,
+        "xlsx": "SNPS_ANSS_merger_model.xlsx",
+        "pdf": "SNPS_ANSS_deal_memo.pdf",
+        "hero_charts": ("accretion_by_year.png", "target_football.png"),
+        "label": "Synopsys/ANSYS",
+    },
+    "csco_splk": {
+        "build": build_csco_splk_bundle,
+        "narrative": CSCO_SPLK_NARRATIVE,
+        "xlsx": "CSCO_SPLK_merger_model.xlsx",
+        "pdf": "CSCO_SPLK_deal_memo.pdf",
+        "hero_charts": (),  # deal #1 supplies the README heroes
+        "label": "Cisco/Splunk",
+    },
+}
 
 
 def _manifest_line(path: Path) -> str:
@@ -60,44 +79,62 @@ def _manifest_line(path: Path) -> str:
     return f"  {path.relative_to(ROOT)}  ({kb:,.1f} KB)"
 
 
-def main() -> None:
-    for d in (OUT, ASSETS, RELEASES, DOCS, DOCS_IMG):
-        d.mkdir(parents=True, exist_ok=True)
+def _build_deal(deal_key: str) -> list[Path]:
+    """Build one deal's workbook + memo deterministically and publish to releases/."""
+    cfg = DEALS[deal_key]
+    assets = ASSETS / deal_key  # per-deal chart dir so the two memos don't collide
+    assets.mkdir(parents=True, exist_ok=True)
 
     # Single source of truth: build the bundle once, derive everything from it.
-    model = build_flagship_bundle(precedents_csv=str(PRECEDENTS_CSV))
-
+    model = cfg["build"](precedents_csv=str(PRECEDENTS_CSV))
     written: list[Path] = []
 
-    # 1. Live-formula workbook. Then cache recalculated values into the formula
-    #    cells so no-recalc previewers (GitHub, Quick Look, Google Sheets) show
-    #    numbers while the formulas stay live for Excel.
-    xlsx_out = OUT / XLSX_NAME
+    # 1. Live-formula workbook + cached values (so no-recalc previewers show
+    #    numbers while formulas stay live for Excel).
+    xlsx_out = OUT / cfg["xlsx"]
     ExcelWorkbookWriter().write(str(xlsx_out), model)
     cache_formula_values(str(xlsx_out))
     written.append(xlsx_out)
 
-    # 2. M&A committee memo PDF (charts rendered into out/assets, inlined).
-    pdf_out = OUT / PDF_NAME
-    render_memo(model, str(pdf_out), str(ASSETS), narrative=SNPS_ANSS_NARRATIVE, as_of=AS_OF)
+    # 2. M&A committee memo PDF (charts rendered into out/assets/<deal>, inlined).
+    pdf_out = OUT / cfg["pdf"]
+    render_memo(model, str(pdf_out), str(assets), narrative=cfg["narrative"], as_of=AS_OF)
     written.append(pdf_out)
 
     # 3. Publish committed deliverables into releases/.
-    for name in (XLSX_NAME, PDF_NAME):
+    for name in (cfg["xlsx"], cfg["pdf"]):
         dst = RELEASES / name
         shutil.copyfile(OUT / name, dst)
         written.append(dst)
 
-    # 4. Copy the hero charts into docs/img for the README.
-    for chart in HERO_CHARTS:
+    # 4. Copy any hero charts into docs/img for the README.
+    for chart in cfg["hero_charts"]:
         dst = DOCS_IMG / chart
-        shutil.copyfile(ASSETS / chart, dst)
+        shutil.copyfile(assets / chart, dst)
         written.append(dst)
 
-    print("Built Synopsys/ANSYS deliverables (deterministic):")
-    for p in written:
-        print(_manifest_line(p))
+    return written
+
+
+def main(deal_keys: list[str] | None = None) -> None:
+    for d in (OUT, ASSETS, RELEASES, DOCS, DOCS_IMG):
+        d.mkdir(parents=True, exist_ok=True)
+    for deal_key in deal_keys or list(DEALS):
+        written = _build_deal(deal_key)
+        print(f"Built {DEALS[deal_key]['label']} deliverables (deterministic):")
+        for p in written:
+            print(_manifest_line(p))
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    ap = argparse.ArgumentParser(description="Build proforma deliverables (workbook + memo).")
+    ap.add_argument(
+        "--deal",
+        choices=[*sorted(DEALS), "all"],
+        default="all",
+        help="which deal to build (default: all)",
+    )
+    args = ap.parse_args()
+    main(None if args.deal == "all" else [args.deal])

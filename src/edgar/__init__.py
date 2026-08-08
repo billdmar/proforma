@@ -9,6 +9,10 @@ from __future__ import annotations
 
 from src.edgar.client import EdgarClient
 from src.edgar.extract import extract_deal_terms, extract_fairness_disclosures
+from src.edgar.extract_csco_splk import (
+    extract_deal_terms_csco_splk,
+    extract_fairness_disclosures_csco_splk,
+)
 from src.edgar.filings import (
     FilingRef,
     archives_url,
@@ -25,7 +29,9 @@ __all__ = [
     "FilingRef",
     "archives_url",
     "extract_deal_terms",
+    "extract_deal_terms_csco_splk",
     "extract_fairness_disclosures",
+    "extract_fairness_disclosures_csco_splk",
     "find_documents",
     "get_document_text",
     "html_to_text",

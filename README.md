@@ -62,6 +62,30 @@ offered $390.19.</sub>
 - **`src/`** — the Python engine (EDGAR extraction → dual standalone models →
   deal engine → combination engine → workbook + memo + verification).
 
+## The engine generalizes — a second deal, unchanged
+To show the platform isn't hand-tuned to one transaction, the **same engine**
+also reconstructs **Cisco's ~$28B all-cash acquisition of Splunk** (announced
+Sept 2023, closed Mar 2024) — a deliberately different shape: pure cash/debt
+(no stock leg), an *unprofitable, negative-book-equity* target, and **two**
+fairness advisors (Qatalyst Partners **and** Morgan Stanley). No engine code
+changed; only the deal-specific inputs (fixtures, proxy extraction, assumptions,
+narrative) are new — the reuse *is* the proof.
+
+- Deliverables: **`releases/CSCO_SPLK_merger_model.xlsx`** and
+  **`releases/CSCO_SPLK_deal_memo.pdf`** (see `docs/ASSUMPTIONS_CSCO_SPLK.md`).
+- Result — the mirror image of deal #1: **$157/share all-cash, 31% premium,
+  goodwill $20.9B**, and **accretion/(dilution) of −12.3% / −9.8% / −7.3%**
+  (Yr 1–3) that narrows as Splunk's margin ramps — heavily dilutive early because
+  an all-cash buy of a loss-making target adds ~$22B of after-tax interest with
+  no offsetting share effect. **Breakeven synergies ~$2.1B** confirm it's a
+  growth/strategic bet, not an EPS deal. Both advisors' disclosed ranges are
+  reproduced (mean overlap ~38%).
+- Honest scope note: the deal, PPA, combination, workbook, memo, verifier, DCF
+  and comps engines are reused verbatim; the **fairness harness** dispatches on
+  deal-#1 disclosure conventions, so deal #2 reproduces its advisors through the
+  same underlying valuation primitives with deal-specific dispatch — a real
+  generalization boundary, documented rather than papered over.
+
 ## Verification — the moat
 Every number is engine-computed and machine-checked in CI (committed SEC
 fixtures only; live EDGAR is never called in CI):
