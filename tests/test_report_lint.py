@@ -69,6 +69,22 @@ def test_collect_engine_numbers_covers_precedents():
         assert round(pt.ev_ebitda, 1) in engine
 
 
+def test_collect_engine_numbers_covers_target_dcf():
+    # The flagship bundle carries a standalone ANSYS DCF (target_dcf); its
+    # implied prices and other scalar fields must surface as engine display
+    # forms so the memo's target-valuation exhibit lints clean.
+    bundle = build_flagship_bundle(_PRECEDENTS_CSV)
+    assert bundle.target_dcf is not None
+    engine = collect_engine_numbers(bundle)
+    d = bundle.target_dcf
+    assert round(d.implied_price_gordon, 2) in engine
+    assert round(d.implied_price_exit, 2) in engine
+    assert round(d.wacc * 100.0, 1) in engine  # WACC rendered as a percent
+    assert round(d.equity_value_gordon / 1e9, 1) in engine  # equity value in $B
+    if d.fcff_by_year:
+        assert round(d.fcff_by_year[0] / 1e6, 0) in engine  # a per-year FCFF in $M
+
+
 def test_collect_engine_numbers_covers_sensitivities_and_fairness():
     # The flagship bundle carries neither sensitivities nor a fairness
     # differential yet (populated at G2); attach small ones so those branches

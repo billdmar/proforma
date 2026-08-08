@@ -158,6 +158,23 @@ ANSYS actually recorded explains the gap — more step-up ⇒ less goodwill), ne
 debt $14.3B (matches disclosed), new shares 0.3450×87.3M ≈ 30.1M on ~155.9M.
 A directional sanity check, not tuned to.
 
+### 3.9 Standalone ANSYS DCF (OURS — for the memo's target-valuation section)
+Our own intrinsic view of ANSYS on a standalone basis (distinct from §5, which
+reproduces *Qatalyst's* disclosed assumptions). Discounts the target's
+driver-based unlevered FCF (from §3.2) with:
+- **WACC = 9.43% (OURS, engine-computed):** risk-free **4.3%** (10-yr UST, 2024),
+  beta **1.05** (mature large-cap software), ERP **5.0%**, pre-tax cost of debt
+  **5.0%**, tax 16% (§3.7). Cost of equity ≈ 4.3% + 1.05×5.0% ≈ 9.55%; ANSYS's
+  small book debt pulls the blended WACC fractionally below that to 9.43%. Sits
+  just below Qatalyst's disclosed 10.5%–13.0% band — reasonable for a lower-beta
+  standalone view vs. the advisor's more conservative range.
+- **Terminal: both methods.** Gordon growth **3.0%** (long-run software/GDP-plus;
+  < WACC per the engine's sanity gate) and an exit **EV/EBITDA 22.0x** (mid of
+  the software-precedent band in §data/curated). The memo frames the resulting
+  implied per-share range against the **$390.19** offered consideration.
+These are OUR assumptions, argued here; the engine computes the DCF — no number
+is hand-typed into the memo.
+
 ---
 
 ## 4. Computed results (engine outputs — the G2 headline)

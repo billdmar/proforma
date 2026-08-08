@@ -595,6 +595,12 @@ class MergerModelBundle:
     fairness_disclosures: list[FairnessDisclosure] = field(default_factory=list)
     fairness_differential: FairnessDifferentialReport | None = None
 
+    # Standalone target (ANSYS) DCF — our own valuation, framed in the memo's
+    # target-valuation section against the offered per-share consideration.
+    # Distinct from the fairness differential (which reproduces the ADVISOR's
+    # disclosed assumptions); this is OUR standalone view. Populated at W3.
+    target_dcf: DCFResult | None = None
+
     def primary_combination(self) -> CombinationResult:
         """The management-synergy (disclosed) case if present, else the first."""
         for c in self.combinations:

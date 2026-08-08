@@ -221,8 +221,41 @@ def collect_engine_numbers(model: MergerModelBundle) -> set[float]:
             add(rep.disclosed_low, rep.disclosed_high, rep.our_low, rep.our_high, rep.overlap_pct)
 
     # --- Precedents (premiums / multiples table) ----------------------------
+    # Only ev / ev_revenue / ev_ebitda are harvested — the memo's precedents
+    # exhibit renders those multiples. The curated CSV carries a premium_pct
+    # column, but PrecedentTransaction has no such field (load_precedents drops
+    # it), so premium_pct MUST NOT be rendered as a table figure; if it were, the
+    # lint would (correctly) flag it as unsourced. No harvest branch for it.
     for pt in model.precedents:
         add(pt.ev, pt.ev_revenue, pt.ev_ebitda)
+
+    # --- Standalone target (ANSYS) DCF exhibit ------------------------------
+    # Feed every numeric scalar of the DCFResult so the memo's target-valuation
+    # table (WACC, implied prices, EV/equity bridge, PVs, terminal values,
+    # per-year FCFF) traces to an engine number instead of flagging UNSOURCED.
+    if model.target_dcf is not None:
+        d = model.target_dcf
+        add(
+            d.wacc,
+            d.pv_explicit_fcff,
+            d.terminal_value_gordon,
+            d.terminal_value_exit,
+            d.pv_terminal_gordon,
+            d.pv_terminal_exit,
+            d.enterprise_value_gordon,
+            d.enterprise_value_exit,
+            d.net_debt,
+            d.minority_interest,
+            d.equity_value_gordon,
+            d.equity_value_exit,
+            d.shares_diluted,
+            d.implied_price_gordon,
+            d.implied_price_exit,
+            d.terminal_fcff_normalized,
+            d.discount_factor_exit,
+        )
+        add(*d.fcff_by_year)
+        add(*d.discount_factors)
 
     add(*NARRATIVE_SOURCED_FACTS)  # cited disclosed deal facts in prose
 

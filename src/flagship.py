@@ -33,10 +33,17 @@ from src.interfaces import (
     ProjectionAssumptions,
     StatementSet,
     SynergyCase,
+    TerminalAssumptions,
+    WACCInputs,
 )
 from src.precedents import load_precedents
 from src.schema import CompanyMeta, DealTerms, LineItem
 from src.standalone import ThreeStatementBuilder
+from src.valuation import DCFValuationEngine
+
+# As-of date stamped on the deliverables (deal announced 2024-01-16, closed
+# 2025-07-17; this reconstruction is dated to the build).
+AS_OF = "2026-08-08"
 
 # --- Pre-close base-year cutoffs (see docstring / ASSUMPTIONS §3.0) ---------
 _ACQUIRER_BASE_FY_END_YEAR = 2024  # Synopsys FY2024 ended 2024-10-31 (pre-close)
@@ -65,6 +72,15 @@ _DEFERRED_TAX_RATE_OURS = 0.21  # US statutory on step-up basis difference
 
 # --- Taxes (ours — ASSUMPTIONS §3.7) ----------------------------------------
 _MARGINAL_TAX_OURS = 0.16
+
+# --- Standalone ANSYS DCF inputs (ours — ASSUMPTIONS §3.9) -------------------
+# CAPM: ~4.3% Rf + 1.05 beta × 5.0% ERP ≈ 9.55% (ANSYS ~net cash → WACC ≈ Ke).
+_TGT_RISK_FREE_OURS = 0.043
+_TGT_BETA_OURS = 1.05
+_TGT_ERP_OURS = 0.050
+_TGT_PRETAX_KD_OURS = 0.050
+_TGT_TERMINAL_GROWTH_OURS = 0.030
+_TGT_EXIT_EV_EBITDA_OURS = 22.0
 
 # --- Synergy cases (both ours — ASSUMPTIONS §3.6) ---------------------------
 _SYNERGY_CONSERVATIVE = SynergyCase(
@@ -244,6 +260,32 @@ def build_flagship_bundle(
         combinations=combinations,
         precedents=precedents,
         fairness_disclosures=fairness,
+    )
+
+    # --- Standalone ANSYS DCF (our own target valuation — ASSUMPTIONS §3.9) ---
+    # Market cap at the offered per-share value; ANSYS book debt is immaterial
+    # (~net cash), so WACC ≈ cost of equity. Framed vs. the offer in the memo.
+    tgt_base = tgt_stmts.n_hist - 1
+    offered_px = terms.stated_price_per_share.value if terms.stated_price_per_share else 390.19
+    tgt_market_cap = offered_px * tgt_shares
+    tgt_total_debt = float(tgt_stmts.series(LineItem.LONG_TERM_DEBT)[tgt_base] or 0.0)
+    bundle.target_dcf = DCFValuationEngine().dcf(
+        tgt_stmts,
+        WACCInputs(
+            risk_free_rate=_TGT_RISK_FREE_OURS,
+            beta=_TGT_BETA_OURS,
+            equity_risk_premium=_TGT_ERP_OURS,
+            pretax_cost_of_debt=_TGT_PRETAX_KD_OURS,
+            tax_rate=_MARGINAL_TAX_OURS,
+            market_cap=tgt_market_cap,
+            total_debt=tgt_total_debt,
+        ),
+        TerminalAssumptions(
+            method="both",
+            terminal_growth=_TGT_TERMINAL_GROWTH_OURS,
+            exit_ev_ebitda=_TGT_EXIT_EV_EBITDA_OURS,
+            mid_year_convention=True,
+        ),
     )
 
     # --- Sensitivities + fairness differential (computed off the base bundle) --
