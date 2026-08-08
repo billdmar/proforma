@@ -1,4 +1,10 @@
-# DESIGN.md — proforma architecture (skeleton; expanded through the waves)
+# DESIGN.md — proforma architecture
+
+_Status: complete. The full pipeline (EDGAR extraction → dual standalone models →
+deal engine → combination engine → workbook + memo + verification) is built and
+green in CI: 260 tests, 97.7% coverage, dual XBRL tie-out (1,728 lines to the
+dollar), Excel↔Python differential (61 cells to the cent), fairness differential
+(67.3% mean overlap), determinism. See README for the recruiter summary._
 
 ## One-line
 A merger-model platform that reconstructs one real announced US public-public
@@ -47,10 +53,10 @@ near-verbatim, with the retargeting noted here:
   New: deal engine, combination engine, sensitivities, fairness differential,
   and `MergerModelBundle`.
 - **`config/settings.py`** — SEC fair-access scaffolding (`PROFORMA_OFFLINE`).
-- **EDGAR client, statement builder, valuation/comps/lbo engines, workbook
-  styles + writer patterns, verify suite (recalc/invariants/audit/tieout/
-  report_lint), report template/charts, CI, `verify_all.sh`, docs templates** —
-  ported in W1 with merger-specific extensions.
+- **EDGAR client, statement builder (W1); valuation/comps engines (W2); verify
+  suite (invariants/audit/tieout/report_lint) and report template/charts (W2–W3);
+  workbook styles + writer patterns (W1); CI, `verify_all.sh`, docs templates** —
+  ported from thesis with merger-specific extensions and cited here.
 
 Net-new for the merger model: proxy/8-K **document-text retrieval** with
 document-level provenance; the deal engine (S&U, PPA→goodwill, financing); the
