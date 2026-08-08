@@ -147,7 +147,6 @@ def _sample_bundle() -> MergerModelBundle:
         ppe_step_up=500_000_000.0,
         deferred_tax_rate=0.21,
         marginal_tax_rate=0.21,
-        new_shares_issued=new_shares,
     )
 
     # Sources & uses (must balance; totals verified as live SUMs).

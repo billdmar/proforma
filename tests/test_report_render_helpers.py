@@ -35,8 +35,6 @@ def test_formatters_none_returns_em_dash():
     assert tpl._mult(None) == "—"
     assert tpl._shares(None) == "—"
     assert tpl._net_cash_phrase(None, 1e9, "bn") == "—"
-    assert tpl._ratio(None, 1.0) is None
-    assert tpl._ratio(1.0, 0) is None
 
 
 def test_formatters_render_values():
@@ -46,7 +44,6 @@ def test_formatters_render_values():
     assert tpl._pct(0.287) == "28.7%"
     assert tpl._mult(20.6) == "20.6x"
     assert tpl._shares(87_299_981) == "87.3M"
-    assert tpl._ratio(2.0, 4.0) == 0.5
 
 
 def test_net_cash_phrase_sign_sense():

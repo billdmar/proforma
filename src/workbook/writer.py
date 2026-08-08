@@ -670,7 +670,7 @@ class ExcelWorkbookWriter:
         )
         S.label_cell(ws, "A3", "Announced")
         ws["B3"].value = t.announce_date.isoformat()
-        S.label_cell(ws, "A4", "Expected close")
+        S.label_cell(ws, "A4", "Closed" if t.close_date else "Expected close")
         ws["B4"].value = t.close_date.isoformat() if t.close_date else "Pending"
 
         S.subheader(ws, "A6", "Headline")

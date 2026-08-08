@@ -203,7 +203,14 @@ class ThreeStatementBuilder:
             + ltd_base
             + sum(flat[li] for li in (_CURRENT_LIABILITIES + _NONCURRENT_LIABILITIES) if li in flat)
         )
-        equity_seed = re_prev + sum(flat[li] for li in _EQUITY if li in flat)
+        # TREASURY_STOCK is a contra-equity account stored as a POSITIVE
+        # magnitude (matching the raw XBRL fact), so it must REDUCE equity, not
+        # add to it. Subtract it explicitly; sum the remaining equity components.
+        equity_seed = (
+            re_prev
+            + sum(flat[li] for li in _EQUITY if li in flat and li is not LineItem.TREASURY_STOCK)
+            - flat[LineItem.TREASURY_STOCK]
+        )
         flat[LineItem.OTHER_NONCURRENT_LIABILITIES] += assets_seed - (liab_seed + equity_seed)
 
         # --- projected output rows ---
@@ -360,10 +367,11 @@ class ThreeStatementBuilder:
                     )
                 )
             )
+            # TREASURY_STOCK is contra-equity stored positive → subtract it.
             total_equity = (
                 flat[LineItem.COMMON_STOCK]
                 + re
-                + flat[LineItem.TREASURY_STOCK]
+                - flat[LineItem.TREASURY_STOCK]
                 + flat[LineItem.AOCI]
             )
             proj[LineItem.TOTAL_CURRENT_ASSETS][t] = tca

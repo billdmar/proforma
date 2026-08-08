@@ -30,9 +30,9 @@ tables so they are lint-verifiable. The renderer sets
 6. **Accretion/dilution analysis** — the EPS bridge and A/D across years and
    both synergy cases; the premium × synergies and consideration-mix sensitivity
    story; why Year-1 dilution is not automatically bad.
-7. **Synergies** — management's disclosed figure (quoted, sourced) vs. our
-   conservative case (reasoned); breakeven-synergy framing. Both labeled
-   assumptions — never presented as fact.
+7. **Synergies** — our base vs. conservative case (both reasoned and labeled
+   ours; the proxy discloses no quantified run-rate); breakeven-synergy framing.
+   Never presented as fact.
 8. **Risks** — regulatory (antitrust), integration, financing, market.
 9. **Fairness-opinion comparison appendix** — the differential: advisors'
    disclosed implied ranges vs. our reproduction from their disclosed
@@ -40,7 +40,7 @@ tables so they are lint-verifiable. The renderer sets
 
 ## Mandatory disclaimer (front matter + footer)
 > Educational reconstruction from public SEC filings. Not investment advice.
-> Synergy figures are labeled assumptions (management's disclosed estimate and
-> our own conservative case), not forecasts. This memo passes no verdict on
-> whether the transaction should occur and implies no endorsement by the SEC,
-> the named companies, or their financial advisors.
+> Synergy figures are our own labeled assumptions (a base and a conservative
+> case), not forecasts; the proxy discloses no quantified synergy run-rate. This
+> memo passes no verdict on whether the transaction should occur and implies no
+> endorsement by the SEC, the named companies, or their financial advisors.

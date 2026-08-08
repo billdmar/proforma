@@ -31,10 +31,11 @@ from src.schema import LineItem
 # Verbatim disclaimer (docs/MEMO_SPEC.md "Mandatory disclaimer"). Do not reword.
 DISCLAIMER = (
     "Educational reconstruction from public SEC filings. Not investment advice. "
-    "Synergy figures are labeled assumptions (management's disclosed estimate and "
-    "our own conservative case), not forecasts. This memo passes no verdict on "
-    "whether the transaction should occur and implies no endorsement by the SEC, "
-    "the named companies, or their financial advisors."
+    "Synergy figures are our own labeled assumptions (a base and a conservative "
+    "case), not forecasts; the proxy discloses no quantified synergy run-rate. "
+    "This memo passes no verdict on whether the transaction should occur and "
+    "implies no endorsement by the SEC, the named companies, or their financial "
+    "advisors."
 )
 
 _PLACEHOLDER = "[DRAFT: {}]"
@@ -96,12 +97,6 @@ def _net_cash_phrase(net_debt: float | None, scale: float, sfx: str) -> str:
         return "—"
     mag = f"${_num(abs(net_debt), scale, dp=1)} {sfx}"
     return f"net cash {mag}" if net_debt < 0 else f"net debt {mag}"
-
-
-def _ratio(num: float | None, den: float | None) -> float | None:
-    if num is None or den in (None, 0):
-        return None
-    return num / den
 
 
 def _auto_scale(statements: StatementSet) -> tuple[float, str]:
@@ -330,8 +325,8 @@ def _target_valuation(
       <tr><td>WACC</td><td>{_pct(d.wacc)}</td></tr>
       <tr><td>Enterprise value (Gordon)</td>
           <td>{_usd(d.enterprise_value_gordon, scale, " " + sfx)}</td></tr>
-      <tr><td>Net debt (negative = net cash)</td>
-          <td>{_usd(d.net_debt, scale, " " + sfx)}</td></tr>
+      <tr><td>Net cash / (debt)</td>
+          <td>{_net_cash_phrase(d.net_debt, scale, sfx)}</td></tr>
       <tr><td>Equity value (Gordon)</td>
           <td>{_usd(d.equity_value_gordon, scale, " " + sfx)}</td></tr>
       <tr style="font-weight:bold;"><td>Implied price — Gordon</td>

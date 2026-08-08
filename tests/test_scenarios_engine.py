@@ -198,7 +198,6 @@ def _synthetic_da() -> DealAssumptions:
         intangible_useful_life_years=0.0,
         deferred_tax_rate=0.21,
         marginal_tax_rate=0.21,
-        new_shares_issued=0.0,
     )
 
 

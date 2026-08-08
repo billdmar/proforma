@@ -103,7 +103,10 @@ Revenue growth **9% → 7%** (FY22–FY24 CAGR ≈ 11%, decelerating). Operating
 margin ~**28%** (FY24 actual 28.2%; higher-margin simulation software). Tax
 **16%** normalized (historical effective 9.0%→19.8% trending up). Capex ~1.5%;
 D&A ~5.5% (amortization of prior-deal intangibles). **Dividend payout = 100%**
-post-close (see §3.6). Standalone diluted shares ~87.9M.
+post-close — a stated modeling simplification that holds ANSYS's book equity
+flat so the combination engine's constant day-1 purchase-accounting elimination
+ties the pro forma balance sheet every period (see the "W2 constraint" note
+above). Standalone diluted shares ~87.9M.
 
 ### 3.3 Deal terms — DISCLOSED (from §2, provenance-stamped, not ours)
 $197.00 cash + 0.3450 SNPS/ANSS share; ~87.3M target shares; implied $390.19/sh;
@@ -114,7 +117,7 @@ unaffected close, per proxy). We use the disclosed terms exactly.
 Synopsys funded the ~$17B cash leg with **$10.0B senior notes (issued
 2025-03-17) + $4.3B term loan (borrowed 2025-07-17) + cash on hand**; the ~$690M
 bridge was terminated/replaced (SNPS 425 accession 0001140361-25-026140 —
-disclosed). ⇒ we model **$14.3B new debt + ~$2.7B cash on hand**.
+disclosed). ⇒ we model **$14.3B new debt + ~$3.05B cash on hand**.
 - **New-debt blended rate = 5.0% (OURS).** The exact tranche coupons are not in
   the cached filings (honest unknown); 5.0% is a defensible blended
   investment-grade-tech cost across 2025 senior notes + a SOFR-based term loan.
@@ -152,10 +155,11 @@ statutory per §3.5 — a deliberate, standard distinction.)
 
 ### 3.8 Post-close reality check (not an input — a validation)
 SNPS FY2025 (post-close) reports goodwill ~$26.9B, LT debt ~$13.46B, ~186M
-shares. Our engine's independent build lands in the same neighborhood:
-**goodwill $22.6B** (our conservative $8B intangible step-up vs. the ~$12.5B
-ANSYS actually recorded explains the gap — more step-up ⇒ less goodwill), new
-debt $14.3B (matches disclosed), new shares 0.3450×87.3M ≈ 30.1M on ~155.9M.
+shares. Our engine's independent build lands close: **goodwill $25.4B** —
+computed off ANSYS's reported book equity ($6,086M) with our $8B intangible
+step-up; the ~$1.5B gap to the actual ~$26.9B is explained by our conservative
+step-up vs. the ~$12.5B ANSYS actually recorded (more step-up ⇒ less goodwill).
+New debt $14.3B (matches disclosed); new shares 0.3450×87.3M ≈ 30.1M on ~155.9M.
 A directional sanity check, not tuned to.
 
 ### 3.9 Standalone ANSYS DCF (OURS — for the memo's target-valuation section)
@@ -182,7 +186,7 @@ All figures below are produced by the engine from §3's assumptions; none is
 hand-typed. Reproduced deterministically by `src.flagship.build_flagship_bundle`.
 
 **Deal:** equity purchase price **$34.1B**; implied **$390.19/share**; premium
-**28.7%**; **goodwill $22.6B**; incremental step-up D&A **~$0.8B/yr**;
+**28.7%**; **goodwill $25.4B**; incremental step-up D&A **~$0.8B/yr**;
 30.1M new Synopsys shares on ~155.9M → target holders own ~16% of the combined.
 
 **Accretion/(dilution), pro forma diluted EPS vs. Synopsys standalone:**

@@ -327,9 +327,6 @@ class DealAssumptions:
     target_existing_goodwill_written_off: bool = True
     # Effective tax rate for pro forma adjustments.
     marginal_tax_rate: float = 0.0
-    # New shares issued to fund the stock leg (share count); reference price for
-    # valuing them is a disclosed term.
-    new_shares_issued: float = 0.0
 
 
 @dataclass

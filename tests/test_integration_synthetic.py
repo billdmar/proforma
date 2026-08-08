@@ -243,7 +243,6 @@ def _build_bundle(
         ppe_useful_life_years=5.0,
         deferred_tax_rate=_TAX,
         marginal_tax_rate=_TAX,
-        new_shares_issued=_EXCHANGE_RATIO * _TARGET_SHARES,
     )
     deal = DealEngineImpl().build(
         terms, da, target_book_equity=tgt_book_eq, target_existing_goodwill=tgt_existing_gw

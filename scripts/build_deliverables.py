@@ -38,7 +38,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.flagship import AS_OF, build_flagship_bundle  # noqa: E402
 from src.narrative import SNPS_ANSS_NARRATIVE  # noqa: E402
 from src.report import render_memo  # noqa: E402
-from src.workbook import ExcelWorkbookWriter  # noqa: E402
+from src.workbook import ExcelWorkbookWriter, cache_formula_values  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "out"
@@ -69,9 +69,12 @@ def main() -> None:
 
     written: list[Path] = []
 
-    # 1. Live-formula workbook.
+    # 1. Live-formula workbook. Then cache recalculated values into the formula
+    #    cells so no-recalc previewers (GitHub, Quick Look, Google Sheets) show
+    #    numbers while the formulas stay live for Excel.
     xlsx_out = OUT / XLSX_NAME
     ExcelWorkbookWriter().write(str(xlsx_out), model)
+    cache_formula_values(str(xlsx_out))
     written.append(xlsx_out)
 
     # 2. M&A committee memo PDF (charts rendered into out/assets, inlined).

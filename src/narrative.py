@@ -16,7 +16,7 @@ Discipline (docs/MEMO_SPEC.md §Voice):
 
 Figures referenced in prose (all engine-computed, cross-checked in the tables):
 equity purchase price ~$34.1B; consideration $197.00 cash + 0.3450 SNPS share
-(~$390.19 implied, 28.7% premium); goodwill ~$22.6B on an $8.0B intangible
+(~$390.19 implied, 28.7% premium); goodwill ~$25.4B on an $8.0B intangible
 step-up (~$0.8B/yr incremental amortization); accretion/(dilution) −38.5%→−20.6%
 (base) / −42.1%→−24.0% (conservative) over Yr1–5; breakeven synergies ~$1.25B;
 standalone ANSYS DCF ~$140 (Gordon) / ~$264 (exit); fairness mean overlap 67.3%.
@@ -89,9 +89,10 @@ SNPS_ANSS_NARRATIVE: dict[str, str] = {
         "conservative versus the ~$12.5 billion Synopsys actually recorded — and "
         "book the deferred-tax liability that the step-up creates at the 21% "
         "statutory rate. Goodwill is the plug that makes the entry balance: "
-        "equity purchase price less the fair value of net identifiable assets, "
-        "landing near $22.6 billion (versus ~$26.9 billion actually reported — a "
-        "smaller step-up leaves more in goodwill; the two move together). The "
+        "equity purchase price less the fair value of net identifiable assets "
+        "(computed off ANSYS's reported ~$6.1B book equity), landing near $25.4 "
+        "billion (versus ~$26.9 billion actually reported — our smaller step-up "
+        "leaves modestly more in goodwill; the two move together). The "
         "consequence that drives the next section: the $8.0B step-up amortizes at "
         "roughly $0.8 billion per year, a real, non-cash charge to pro forma GAAP "
         "earnings."

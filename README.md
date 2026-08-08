@@ -9,7 +9,7 @@
 🧾 [Assumptions ledger](docs/ASSUMPTIONS.md) ·
 🎤 [Interview notes](docs/INTERVIEW_NOTES.md)
 
-**A full merger model built on a real announced deal — Synopsys's ~$35B
+**A full merger model built on a real announced deal — Synopsys's ~$34B
 acquisition of ANSYS — reconstructed from the actual SEC filings into a
 live-formula Excel model and an M&A committee memo, then differentially verified
 against the deal's own disclosed fairness opinion.** Every number is computed by
@@ -31,7 +31,7 @@ it; and a verification suite proves the three agree to the cent.
 | **Implied value / premium** | **$390.19 / share** · **28.7% premium** (Dec-21-2023 unaffected) |
 | **Equity purchase price** | **~$34.1B** (30.1M new SNPS shares; target holders own ~16%) |
 | **Financing** | $10.0B senior notes + $4.3B term loan + ~$3.0B cash (disclosed structure) |
-| **Goodwill (our PPA)** | **$22.6B** on an $8.0B intangible step-up _(vs. ~$26.9B actually recorded)_ |
+| **Goodwill (our PPA)** | **$25.4B** on an $8.0B intangible step-up _(vs. ~$26.9B actually recorded)_ |
 | **Accretion/(dilution), base case** | **−38.5% / −31.4% / −25.6%** (Yr 1–3) — GAAP-dilutive, cash-EPS far less so |
 | **Breakeven synergies (Yr-1 A/D = 0)** | **~$1.25B/yr** — well above our $150M–$300M cases |
 | **Standalone ANSYS DCF (ours)** | **~$140 (Gordon) / ~$264 (exit)** vs. the $390 offer → premium is for control/strategy |

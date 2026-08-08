@@ -128,13 +128,13 @@ def _accretion_dilution(
     cash_needs = aggregate_cash + fees
     cash_on_hand_used = min(base_deal_assumptions.cash_on_hand_used, cash_needs)
     new_debt = cash_needs - cash_on_hand_used
-    new_shares = exchange_ratio * tgt_shares
 
+    # The stock-leg share count is derived inside the deal engine from
+    # exchange_ratio × target_shares; we only perturb financing here.
     new_da = replace(
         base_deal_assumptions,
         new_debt=new_debt,
         cash_on_hand_used=cash_on_hand_used,
-        new_shares_issued=new_shares,
     )
     deal = deal_engine.build(
         new_terms,

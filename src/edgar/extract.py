@@ -48,6 +48,14 @@ _DEFM14A_FILED = date(2024, 4, 17)
 # disclosed fact carried on DealTerms.announce_date.
 _ANNOUNCE_DATE = date(2024, 1, 16)
 
+# Deal COMPLETION date — disclosed in ANSYS's merger-completion 8-K (accession
+# 0001140361-25-026141, filed 2025-07-17: "completed the transactions
+# contemplated by the previously announced Agreement and Plan of Merger").
+# The DEFM14A itself was filed while the deal was pending; the close is this
+# later, separately-disclosed fact.
+_CLOSE_DATE = date(2025, 7, 17)
+_CLOSE_8K_ACCESSION = "0001140361-25-026141"
+
 # En-dash / hyphen used between range endpoints in the proxy tables.
 _DASH = r"[–—-]"
 
@@ -225,7 +233,7 @@ def extract_deal_terms(text: str | None = None, ref: FilingRef | None = None) ->
         acquirer_name=settings.ACQUIRER_NAME,
         target_name=settings.TARGET_NAME,
         announce_date=_ANNOUNCE_DATE,
-        close_date=None,  # pending as of the DEFM14A
+        close_date=_CLOSE_DATE,  # disclosed in the completion 8-K (see _CLOSE_8K_ACCESSION)
         consideration_type=ConsiderationType.MIXED,
         cash_per_share=cash_per_share,
         exchange_ratio=exchange_ratio,

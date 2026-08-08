@@ -71,12 +71,15 @@ of intangible step-up amortization — that's purchase-accounting D&A, a
 bookkeeping artifact of writing ANSYS's assets up to fair value. It reduces
 GAAP EPS but it's not a cash outflow and it doesn't reflect any deterioration
 in the business. On a **cash-EPS basis (excluding step-up amortization)** the
-picture is materially less dilutive. Acquirers routinely guide to cash EPS or
-non-GAAP EPS for exactly this reason. So GAAP-dilutive can coexist with a deal
-that's value-creating and cash-accretive. The real question isn't "is Year-1
-EPS down" — it's whether the strategic value and eventual synergies justify the
-premium. Here the honest answer is that the case is strategic, not EPS-driven,
-and I say that plainly rather than dressing it up.
+picture is materially less dilutive — roughly −10% in Year 1 on cash EPS versus
+−38% on GAAP (adding back the ~$0.8B after-tax step-up amortization). Acquirers
+routinely guide to cash EPS or non-GAAP EPS for exactly this reason. So a
+GAAP-dilutive deal can still be value-creating, and it's far less dilutive than
+the GAAP headline suggests. I'm careful not to overclaim: it's less
+cash-dilutive, not cash-accretive. The real question isn't "is Year-1 EPS down"
+— it's whether the strategic value and eventual synergies justify the premium.
+Here the honest answer is that the case is strategic, not EPS-driven, and I say
+that plainly rather than dressing it up.
 
 ## 4. How did you compute goodwill / the PPA walk?
 Goodwill is the plug in purchase price accounting. I start with the equity
@@ -87,10 +90,10 @@ goodwill** (you don't carry the target's old goodwill forward — you re-measure
 from scratch), **step up identifiable intangibles by $8.0B** (our assumption),
 and record a **deferred tax liability** on that step-up. Goodwill = equity
 purchase price − fair value of identifiable net assets. That walk produces
-**~$22.6B of goodwill**. As a sanity check, the actual post-close Synopsys
-balance sheet shows ~$26.9B — our number is lower precisely because we assumed
-a more conservative $8B step-up while they booked ~$12.5B; more step-up means
-less goodwill, so the gap ties out directionally.
+**~$25.4B of goodwill**. As a sanity check, the actual post-close Synopsys
+balance sheet shows ~$26.9B — our number is a touch lower precisely because we
+assumed a more conservative $8B step-up while they booked ~$12.5B; more step-up
+means less goodwill, so the gap ties out directionally.
 
 ## 5. What are the step-up and the DTL, and why?
 The step-up is writing the target's identifiable intangibles — developed
@@ -170,9 +173,10 @@ half their consideration in cash, so they don't receive equity proportional to
 what they contribute — they were partly cashed out. In a pure all-stock deal,
 contribution and ownership converge toward each other (adjusted for relative
 valuation); the gap here quantifies how much of the target was bought with cash
-versus paper. It's also a premium tell: they contribute ~29% of revenue but the
-buyer paid a 29% premium, so the sellers got value out in cash rather than
-riding the combined equity.
+versus paper. It's also a premium tell: ANSYS holders own only ~16% of the
+combined company yet were paid a 28.7% premium and over half their consideration
+in cash — so they realized value up front rather than riding the combined
+equity.
 
 ## 11. How did you value ANSYS standalone, and why is it below the offer?
 I ran an independent DCF on ANSYS on a standalone basis — this is **my own**

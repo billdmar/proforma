@@ -6,7 +6,7 @@ Figures are the engine's outputs as of the current build (see `docs/ASSUMPTIONS.
 ## Primary (3 bullets — the default)
 - Reconstructed **Synopsys's ~$34B acquisition of ANSYS** from the actual SEC
   merger proxy into a **live-formula Excel merger model and a 9-section M&A
-  committee memo** — sources & uses, purchase price accounting (**$22.6B
+  committee memo** — sources & uses, purchase price accounting (**$25.4B
   goodwill** on an $8B intangible step-up), pro forma statements, and EPS
   **accretion/(dilution) of −38.5% / −31.4% / −25.6% (Yr 1–3)** with
   premium×synergies and consideration-mix sensitivities and a **~$1.25B

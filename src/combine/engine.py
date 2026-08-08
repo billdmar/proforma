@@ -20,10 +20,12 @@ Tax convention (deliberate — matches the frozen EPSBridge contract):
     This is the only build consistent with the EPSBridge fields (separate
     standalone NIs + after-tax adjustment items that sum to pro forma NI): a
     "tax the whole combined pretax at the marginal rate" build cannot populate
-    those fields without an unexplained tax-restatement plug. Interest legs are
-    stored pre-tax (per the field names); D&A and synergies are stored after
-    tax (per the field comments). The pro forma income statement's PRETAX /
-    TAX / NET_INCOME lines are built to reconcile exactly to this same NI.
+    those fields without an unexplained tax-restatement plug. All four
+    adjustment legs — incremental interest, foregone interest income, step-up
+    D&A, and synergies — are stored AFTER-TAX (per the EPSBridge field names and
+    contract), so the bridge is a pure additive walk to pro forma NI. The pro
+    forma income statement's PRETAX / TAX / NET_INCOME lines reconcile exactly
+    to this same NI.
 
 Pro forma balance sheet: the combined (acquirer + target) balance sheet with the
 purchase-accounting adjustments layered on at the deal date and carried across

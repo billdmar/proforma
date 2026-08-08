@@ -13,7 +13,7 @@ Critical modeling decisions (see docs/ASSUMPTIONS.md):
   (2024-12-31). Synopsys FY2025 already consolidates ANSYS (goodwill $3.4B→$26.9B,
   LT debt →$13.46B), so using it would double-count the target; we slice it off.
 * **Financing.** ~$14.3B new debt ($10.0B senior notes + $4.3B term loan,
-  disclosed) + ~$2.7B cash on hand; blended new-debt rate 5.0% (ours).
+  disclosed) + ~$3.05B cash on hand; blended new-debt rate 5.0% (ours).
 * **PPA.** Write off ANSYS's existing goodwill, step up intangibles $8.0B (10-yr),
   DTL at 21% statutory; goodwill is the plug.
 * **Target payout = 100%** post-close so its book equity stays flat and the pro
@@ -120,7 +120,7 @@ def _acquirer_assumptions() -> ProjectionAssumptions:
 
 def _target_assumptions() -> ProjectionAssumptions:
     """ANSYS standalone drivers (ASSUMPTIONS §3.2). Payout=100% so book equity
-    stays flat post-close and the pro forma BS balances every period (§3.6)."""
+    stays flat post-close and the pro forma BS balances every period (§3.2)."""
     return ProjectionAssumptions(
         n_years=_N_PROJ_YEARS,
         revenue_growth=[0.09, 0.08, 0.08, 0.07, 0.07],
@@ -136,7 +136,7 @@ def _target_assumptions() -> ProjectionAssumptions:
         interest_rate_on_debt=0.045,
         interest_rate_on_cash=0.03,
         min_cash=300_000_000.0,
-        dividend_payout=[1.0] * _N_PROJ_YEARS,  # 100% payout → equity flat (§3.6)
+        dividend_payout=[1.0] * _N_PROJ_YEARS,  # 100% payout → equity flat (§3.2)
     )
 
 
@@ -208,10 +208,10 @@ def build_flagship_bundle(
     # part of the deal financing), so refinanced_target_debt = 0.
     tgt_lt_debt = 0.0
 
-    # New Synopsys shares issued for the stock leg = exchange ratio × target shares.
-    xratio = terms.exchange_ratio.value if terms.exchange_ratio else 0.0
+    # Target shares outstanding (disclosed) — used to gross up consideration and
+    # for the standalone-DCF market cap below. The stock leg's new-share count is
+    # computed inside the deal engine from exchange_ratio × target_shares.
     tgt_shares = terms.target_shares_outstanding.value if terms.target_shares_outstanding else 0.0
-    new_shares_issued = xratio * tgt_shares
 
     deal_assum = DealAssumptions(
         new_debt=_NEW_DEBT_OURS,
@@ -226,7 +226,6 @@ def build_flagship_bundle(
         ppe_useful_life_years=_PPE_LIFE_OURS,
         deferred_tax_rate=_DEFERRED_TAX_RATE_OURS,
         marginal_tax_rate=_MARGINAL_TAX_OURS,
-        new_shares_issued=new_shares_issued,
     )
     deal = DealEngineImpl().build(
         terms,
