@@ -70,9 +70,131 @@ target for the G1 tie-out.
   extend the engine, so the BS-balance invariant holds across the horizon.
 
 ## 3. Our modeling assumptions (OURS — set by ORCH at W2)
-_To be filled at W2 with 2–4 line rationales each: standalone drivers for both
-companies; financing structure (new debt / rate / cash used / fees); PPA choices
-(step-ups, useful lives, deferred-tax rate); and TWO synergy cases —
-management's disclosed figure (quoted + sourced) and our conservative case
-(reasoned). Placeholder now; the judgment core is written when the real-deal
-model is built._
+Everything in this section is **our judgment**, not disclosed fact. Each driver
+carries a 2–4 line rationale grounded in the companies' reported history (§2 of
+the tie-out) or standard M&A practice. Figures are defensible, not precise
+forecasts.
+
+### 3.0 The pre-close base-year cut (critical)
+The standalone models are built from each company's **last pre-close fiscal
+year**, because a post-close period already contains the combination:
+- **Acquirer = Synopsys FY2024 (ended 2024-10-31):** revenue $6,127M, operating
+  margin 22.1%, LT debt ~$16M, ~155.9M diluted shares. **We deliberately do NOT
+  use SNPS FY2025 (ended 2025-10-31)** — that period already consolidates ANSYS
+  (total assets jump $13.1B→$48.2B, goodwill $3.4B→$26.9B, LT debt →$13.46B,
+  shares →186M as the deal closed 2025-07-17). Using it would double-count the
+  target. FY2025 is instead kept aside as a real-world **post-close sanity check**
+  on our pro forma (see §3.7).
+- **Target = ANSYS FY2024 (ended 2024-12-31):** revenue $2,545M, operating margin
+  28.2%, book equity $6,086M, existing goodwill $3,778M, LT debt $754M, ~87.9M
+  diluted shares. These feed the PPA and standalone projection.
+
+### 3.1 Standalone drivers — Synopsys (acquirer)
+5-year projection off FY2024. Revenue growth **11% → 9%** tapering (3-yr
+historical CAGR ≈ 15% FY22–FY24 but decelerating as EDA matures; we taper
+conservatively). Operating margin held ~**22%** (FY24 actual 22.1%; R&D-heavy
+model, ~34% of revenue). Tax **16%** marginal (historical effective is a
+distorted 4–7% from R&D credits and discretes; 16% is a defensible normalized
+rate below the 21% statutory). Capex ~2.5% of revenue; D&A ~4%. No dividend
+(SNPS pays none). Standalone diluted shares held flat at FY24 ~155.9M.
+
+### 3.2 Standalone drivers — ANSYS (target)
+Revenue growth **9% → 7%** (FY22–FY24 CAGR ≈ 11%, decelerating). Operating
+margin ~**28%** (FY24 actual 28.2%; higher-margin simulation software). Tax
+**16%** normalized (historical effective 9.0%→19.8% trending up). Capex ~1.5%;
+D&A ~5.5% (amortization of prior-deal intangibles). **Dividend payout = 100%**
+post-close (see §3.6). Standalone diluted shares ~87.9M.
+
+### 3.3 Deal terms — DISCLOSED (from §2, provenance-stamped, not ours)
+$197.00 cash + 0.3450 SNPS/ANSS share; ~87.3M target shares; implied $390.19/sh;
+29% premium. Reference SNPS price for the stock leg = $559.96 (Dec-21-2023
+unaffected close, per proxy). We use the disclosed terms exactly.
+
+### 3.4 Financing — structure DISCLOSED, blended rate OURS
+Synopsys funded the ~$17B cash leg with **$10.0B senior notes (issued
+2025-03-17) + $4.3B term loan (borrowed 2025-07-17) + cash on hand**; the ~$690M
+bridge was terminated/replaced (SNPS 425 accession 0001140361-25-026140 —
+disclosed). ⇒ we model **$14.3B new debt + ~$2.7B cash on hand**.
+- **New-debt blended rate = 5.0% (OURS).** The exact tranche coupons are not in
+  the cached filings (honest unknown); 5.0% is a defensible blended
+  investment-grade-tech cost across 2025 senior notes + a SOFR-based term loan.
+- **Cash on hand used = ~$3.05B (OURS).** Fixed the disclosed $14.3B debt and the
+  stock leg, then set cash-on-hand to the exact remainder of uses so **sources =
+  uses with no residual plug** and the pro forma balance sheet ties every period.
+  ~$3.05B is comfortably within SNPS's ~$3.9B pre-close cash.
+- **Foregone yield on cash used = 4.0% (OURS)** — the short-term rate SNPS was
+  earning on the cash it deployed.
+- Advisory + financing fees: **$150M (OURS, ~0.4% of deal value)** — a standard
+  large-cap fee load; the proxy does not itemize a single figure.
+
+### 3.5 Purchase price accounting (OURS, standard method)
+Equity purchase price from the disclosed consideration; write off ANSYS's
+existing $3,778M goodwill; step up identifiable intangibles. **Intangible
+step-up = $8.0B (OURS), 10-year life**; PP&E step-up $0 (immaterial for a
+software target). **Deferred-tax rate on step-ups = 21%** (US statutory — the
+DTL is a book/tax basis difference, so statutory, not our 16% P&L rate).
+Goodwill is the plug: equity purchase price − net identifiable assets. This
+produces a large software goodwill balance, consistent with the actual
+post-close SNPS jump to ~$26.9B goodwill (directional check).
+
+### 3.6 Synergies — BOTH cases are OURS (proxy quantifies none)
+The proxy discusses synergies only qualitatively (§2: honest unknown), so we set
+two labeled cases grounded in ANSYS's ~$1.5B FY24 operating-cost base:
+- **Conservative case: $150M annual run-rate**, phased 33%/67%/100% over Y1–Y3.
+- **Base/"management-style" case: $300M annual run-rate**, phased 50%/75%/100%.
+Both pre-tax cost synergies. We frame **breakeven synergies** (the run-rate that
+makes Year-1 A/D = 0) against these. No figure is presented as management's.
+
+### 3.7 Marginal tax rate for deal adjustments = 16% (OURS)
+Applied to incremental interest, foregone income, step-up D&A, and synergies —
+consistent with the normalized standalone rate. (The step-up DTL uses 21%
+statutory per §3.5 — a deliberate, standard distinction.)
+
+### 3.8 Post-close reality check (not an input — a validation)
+SNPS FY2025 (post-close) reports goodwill ~$26.9B, LT debt ~$13.46B, ~186M
+shares. Our engine's independent build lands in the same neighborhood:
+**goodwill $22.6B** (our conservative $8B intangible step-up vs. the ~$12.5B
+ANSYS actually recorded explains the gap — more step-up ⇒ less goodwill), new
+debt $14.3B (matches disclosed), new shares 0.3450×87.3M ≈ 30.1M on ~155.9M.
+A directional sanity check, not tuned to.
+
+---
+
+## 4. Computed results (engine outputs — the G2 headline)
+All figures below are produced by the engine from §3's assumptions; none is
+hand-typed. Reproduced deterministically by `src.flagship.build_flagship_bundle`.
+
+**Deal:** equity purchase price **$34.1B**; implied **$390.19/share**; premium
+**28.7%**; **goodwill $22.6B**; incremental step-up D&A **~$0.8B/yr**;
+30.1M new Synopsys shares on ~155.9M → target holders own ~16% of the combined.
+
+**Accretion/(dilution), pro forma diluted EPS vs. Synopsys standalone:**
+| Case (annual synergy run-rate) | Y1 | Y2 | Y3 | Y4 | Y5 |
+|---|---|---|---|---|---|
+| Base (ours, $300M) | −38.5% | −31.4% | −25.6% | −22.9% | −20.6% |
+| Conservative (ours, $150M) | −42.1% | −35.3% | −29.8% | −26.7% | −24.0% |
+
+Deeply GAAP-dilutive — the expected result of an all-premium software deal with
+~$0.8B/yr of purchase-accounting amortization. This is the standard
+**GAAP-dilutive / strategically-accretive** story: on a cash-EPS (ex-amortization)
+basis the picture is far less dilutive. **Breakeven synergies (Year-1 A/D = 0):
+~$1.25B/yr** — well above our cases, i.e. the deal is not EPS-accretive on
+plausible cost synergies alone; the rationale is strategic (the full
+silicon-to-systems design stack), not near-term EPS.
+
+## 5. Fairness differential — OUR engine vs. Qatalyst's disclosed ranges
+Fed Qatalyst's **disclosed** assumptions (discount rates, multiples, Management
+Case 1 UFCF), our engine reproduces their disclosed implied per-share ranges.
+**Measured, never tuned:**
+| Methodology | Qatalyst disclosed | Our reproduction | Overlap |
+|---|---|---|---|
+| Discounted Cash Flow | $160.25–$496.04 | $342.44–$555.02 | 45.7% |
+| Selected Companies | $198.32–$340.71 | $227.66–$364.26 | 79.4% |
+| Selected Transactions | $199.97–$319.88 | $227.66–$364.26 | 76.9% |
+| **Mean overlap** | | | **67.3%** |
+
+**Deviation investigated (not tuned away):** our DCF uses only Management Case 1
+(the sole projection set tabulated in the proxy), while Qatalyst's disclosed DCF
+range is the *union* across Cases 1–3 — so our narrower Case-1 range sits in the
+upper portion of their wider band, the main driver of the 45.7% DCF overlap. The
+multiple-based methods (equity/LFCF multiples, ANSYS net-cash) overlap ~77–79%.

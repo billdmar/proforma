@@ -404,3 +404,100 @@ def test_deterministic_byte_identical(tmp_path):
     ExcelWorkbookWriter().write(str(p1), b)
     ExcelWorkbookWriter().write(str(p2), b)
     assert p1.read_bytes() == p2.read_bytes()
+
+
+# ---------------------------------------------------------------------------
+# Real flagship bundle: Sensitivities + Fairness tabs now carry LIVE formulas.
+# ---------------------------------------------------------------------------
+_PRECEDENTS_CSV = "data/curated/precedents_software.csv"
+
+
+@pytest.fixture(scope="module")
+def _flagship():
+    """The real, fully-populated flagship bundle (sensitivities + fairness
+    attached). Module-scoped: the build runs the deal/combination engines and is
+    reused across the tests below."""
+    from src.flagship import build_flagship_bundle
+
+    return build_flagship_bundle(_PRECEDENTS_CSV)
+
+
+def test_sensitivities_grid_interior_is_live_formula(tmp_path, _flagship):
+    """Every synergy-column ≥ 2 interior grid cell (a live linear interpolation)
+    is a formula; the two anchor columns + breakeven remain engine values."""
+    p = tmp_path / "flag.xlsx"
+    ExcelWorkbookWriter().write(str(p), _flagship)
+    wb = load_workbook(p, data_only=False)
+    ws = wb["Sensitivities"]
+    grid = _flagship.sensitivities.premium_x_synergies
+    top = 6
+    n_formula = 0
+    for ridx, row in enumerate(grid.values):
+        rr = top + 1 + ridx
+        # Anchor columns B, C are engine values (not formulas).
+        assert ws[f"B{rr}"].data_type != "f"
+        assert ws[f"C{rr}"].data_type != "f"
+        for cidx in range(2, len(grid.col_values)):
+            if row[cidx] is not None:
+                assert ws[f"{_col_letter(2 + cidx)}{rr}"].data_type == "f"
+                n_formula += 1
+    assert n_formula > 0
+    # Breakeven is a labeled engine value, not a formula.
+    assert ws["B3"].data_type != "f"
+
+
+def test_fairness_midpoints_and_overlap_are_live_formulas(tmp_path, _flagship):
+    p = tmp_path / "flag.xlsx"
+    ExcelWorkbookWriter().write(str(p), _flagship)
+    wb = load_workbook(p, data_only=False)
+    ws = wb["Fairness Comparison"]
+    reps = _flagship.fairness_differential.reproductions
+    assert reps, "flagship fairness differential should carry reproductions"
+    for i, rep in enumerate(reps):
+        rr = 4 + i
+        # Endpoints are engine values.
+        if rep.disclosed_low is not None:
+            assert ws[f"C{rr}"].data_type != "f"
+        # Midpoints + overlap are live formulas.
+        if rep.disclosed_low is not None and rep.disclosed_high is not None:
+            assert ws[f"G{rr}"].data_type == "f"
+        if rep.our_low is not None and rep.our_high is not None:
+            assert ws[f"H{rr}"].data_type == "f"
+        if rep.overlap_pct is not None:
+            assert ws[f"I{rr}"].data_type == "f"
+
+
+def test_flagship_cell_map_grew_and_covers_new_tabs(_flagship):
+    cell_map = build_verifier_cell_map(_flagship)
+    sheets = {s for s, _ in cell_map}
+    assert "Sensitivities" in sheets
+    assert "Fairness Comparison" in sheets
+
+
+def test_flagship_differential_recalc_to_the_cent(tmp_path, _flagship):
+    """THE moat on the REAL flagship workbook: recalc with the ``formulas``
+    library and assert every mapped cell — including the new Sensitivities /
+    Fairness formulas — reproduces the engine value to the cent."""
+    p = tmp_path / "flag.xlsx"
+    ExcelWorkbookWriter().write(str(p), _flagship)
+    cell_map = build_verifier_cell_map(_flagship)
+    # The new live cells materially grow the map beyond the core-deal cells.
+    assert len(cell_map) > 8
+
+    sol = formulas.ExcelModel().loads(str(p)).finish().calculate()
+    fname = os.path.basename(str(p))
+    mismatches = []
+    for (sheet, coord), engine_value in cell_map.items():
+        node = sol.get(f"'[{fname}]{sheet.upper()}'!{coord}")
+        wb_value = None if node is None else float(node.value[0, 0])
+        if wb_value is None or abs(wb_value - engine_value) > 0.01:
+            mismatches.append((sheet, coord, engine_value, wb_value))
+    assert not mismatches, f"differential mismatches: {mismatches}"
+
+
+def _col_letter(idx: int) -> str:
+    letters = ""
+    while idx > 0:
+        idx, rem = divmod(idx - 1, 26)
+        letters = chr(65 + rem) + letters
+    return letters

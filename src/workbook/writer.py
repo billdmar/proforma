@@ -21,12 +21,19 @@ cells without hardcoding coordinates), ``_apply_ergonomics`` (column widths +
 freeze panes), and the deterministic ``_save_pinned`` (pins ZIP timestamps so a
 rebuild is byte-identical).
 
-Scope note (W1): the core deal tabs — Assumptions, Acquirer, Target, Deal & S&U,
+Scope note: the core deal tabs — Assumptions, Acquirer, Target, Deal & S&U,
 PPA, Pro Forma IS, Accretion-Dilution, Contribution — emit LIVE formulas that
-recompute the engine's numbers off the blue inputs. The later tabs (Pro Forma
-BS, Sensitivities, Precedents, Fairness Comparison) are populated from whatever
-the bundle carries (labeled black engine values) and are not part of the
-formula differential.
+recompute the engine's numbers off the blue inputs. Two later tabs carry live
+formulas verified by the differential over cells that are pure functions of
+other cells already on the sheet: the **Sensitivities** premium×synergies grid
+interior (synergy-column index ≥ 2) is a live linear interpolation off the two
+engine-value anchors in each row (A/D is exactly linear in the synergy run-rate,
+so this reproduces the grid to the cent), and the **Fairness Comparison** tab's
+disclosed/our midpoints and per-method overlap % are live formulas off the
+disclosed/our low-high cells. The remaining values on those tabs (breakeven
+synergies, the two anchor columns and axis labels of the grid, the disclosed/our
+range endpoints) are labeled black engine/extraction outputs, as are the
+Pro Forma BS and Precedents tabs.
 """
 
 from __future__ import annotations
@@ -504,8 +511,26 @@ class ExcelWorkbookWriter:
         self._anchors["acq_own"] = _ref(SH_CONTRIB, "B14")
         self._anchors["tgt_own"] = _ref(SH_CONTRIB, "B15")
 
-    # -- Sensitivities (scaffold; grid values from the engine) ----------------
+    # -- Sensitivities (premium × synergies grid) -----------------------------
     def _sensitivities(self, ws: Worksheet, model: MergerModelBundle) -> None:
+        """Premium × synergies accretion/(dilution) grid.
+
+        Which cells are LIVE (verified by the differential) vs. engine-value:
+
+        * **Live formulas** — every interior grid cell in a synergy column with
+          index ≥ 2 (i.e. columns D onward). Because Year-N A/D is *exactly*
+          linear in the synergy run-rate (the combination engine adds
+          after-tax synergies additively), each such cell is a live linear
+          interpolation off the row's two anchor columns (B, C) and the synergy
+          axis header row — a pure function of cells already on the sheet, so it
+          recomputes to the engine grid value to the cent.
+        * **Engine values** — the two anchor columns (B, C) of each row, the row
+          (premium) and column (synergy) axis labels, and the breakeven cell.
+          The breakeven synergies figure is the engine's bisection root; it is
+          NOT a clean function of the grid cells (reconstructing it by
+          interpolation drifts past the cent tolerance), so it is written as a
+          labeled engine value and is not part of the differential.
+        """
         S.section_header(ws, "A1", "Sensitivities — premium × synergies (Year-1 A/D)")
         sens = model.sensitivities
         # Always define a breakeven-synergies cell so the named range resolves.
@@ -518,16 +543,34 @@ class ExcelWorkbookWriter:
             return
         grid = sens.premium_x_synergies
         top = 6
+        cv = grid.col_values
+        # A live linear interpolation needs two distinct synergy anchors.
+        interp_ok = len(cv) >= 2 and (cv[1] - cv[0]) != 0
+        syn0 = f"{_col(2)}{top}"  # first synergy axis header (anchor 0)
+        syn1 = f"{_col(3)}{top}"  # second synergy axis header (anchor 1)
         S.label_cell(ws, f"A{top}", f"{grid.row_label} \\ {grid.col_label}", bold=True)
-        for cidx, cv in enumerate(grid.col_values):
-            S.value_cell(ws, f"{_col(2 + cidx)}{top}", cv, S.FMT_CURRENCY)
+        for cidx, cval in enumerate(cv):
+            S.value_cell(ws, f"{_col(2 + cidx)}{top}", cval, S.FMT_CURRENCY)
         for ridx, rv in enumerate(grid.row_values):
             rr = top + 1 + ridx
             S.value_cell(ws, f"A{rr}", rv, S.FMT_PERCENT)
-            for cidx, _cv in enumerate(grid.col_values):
-                val = grid.values[ridx][cidx]
-                if val is not None:
-                    S.value_cell(ws, f"{_col(2 + cidx)}{rr}", val, S.FMT_PERCENT)
+            row = grid.values[ridx]
+            a0 = f"{_col(2)}{rr}"  # anchor cell at synergy col 0
+            a1 = f"{_col(3)}{rr}"  # anchor cell at synergy col 1
+            can_interp = interp_ok and row[0] is not None and row[1] is not None
+            for cidx in range(len(cv)):
+                gval = row[cidx] if cidx < len(row) else None
+                coord = f"{_col(2 + cidx)}{rr}"
+                if cidx >= 2 and can_interp and gval is not None:
+                    synj = f"{_col(2 + cidx)}{top}"
+                    S.formula_cell(
+                        ws,
+                        coord,
+                        f"={a0}+({a1}-{a0})/({syn1}-{syn0})*({synj}-{syn0})",
+                        S.FMT_PERCENT,
+                    )
+                elif gval is not None:
+                    S.value_cell(ws, coord, gval, S.FMT_PERCENT)
 
     def _precedents(self, ws: Worksheet, model: MergerModelBundle) -> None:
         S.section_header(ws, "A1", "Precedent Transactions (premiums / multiples — cited)")
@@ -548,8 +591,32 @@ class ExcelWorkbookWriter:
             S.label_cell(ws, "A4", "Curated precedent set added at G2/G3.")
 
     def _fairness(self, ws: Worksheet, model: MergerModelBundle) -> None:
+        """Advisor disclosed implied ranges vs. our reproduction.
+
+        Which cells are LIVE (verified by the differential) vs. engine-value:
+
+        * **Engine/extraction values** — the four range endpoints per method
+          (disclosed low/high from the proxy, our low/high from our engine). A
+          range endpoint is an output, correctly written as a value.
+        * **Live formulas** — three per method, each a pure function of the
+          endpoint cells on the same row: the disclosed midpoint ``(low+high)/2``
+          (col G), our midpoint (col H), and the overlap %
+          ``|intersection| / |disclosed width|`` clamped to [0, 1] (col I). These
+          recompute to the engine's midpoints and ``overlap_pct`` to the cent.
+          A formula is emitted only when its inputs are all present on the row.
+        """
         S.section_header(ws, "A1", "Fairness Comparison — advisor ranges vs. our reproduction")
-        headers = ["Advisor", "Method", "Disclosed low", "Disclosed high", "Our low", "Our high"]
+        headers = [
+            "Advisor",
+            "Method",
+            "Disclosed low",
+            "Disclosed high",
+            "Our low",
+            "Our high",
+            "Disclosed mid",
+            "Our mid",
+            "Overlap %",
+        ]
         for k, h in enumerate(headers):
             S.subheader(ws, f"{_col(1 + k)}3", h)
         fd = model.fairness_differential
@@ -560,11 +627,37 @@ class ExcelWorkbookWriter:
         for rep in fd.reproductions:
             S.label_cell(ws, f"A{r}", rep.advisor)
             S.label_cell(ws, f"B{r}", rep.method)
-            for k, v in enumerate(
-                (rep.disclosed_low, rep.disclosed_high, rep.our_low, rep.our_high)
+            dlo, dhi, olo, ohi = (
+                f"C{r}",
+                f"D{r}",
+                f"E{r}",
+                f"F{r}",
+            )
+            for coord, v in (
+                (dlo, rep.disclosed_low),
+                (dhi, rep.disclosed_high),
+                (olo, rep.our_low),
+                (ohi, rep.our_high),
             ):
                 if v is not None:
-                    S.value_cell(ws, f"{_col(3 + k)}{r}", v, S.FMT_PERSHARE)
+                    S.value_cell(ws, coord, v, S.FMT_PERSHARE)
+            # Disclosed midpoint — live off the disclosed low/high cells.
+            if rep.disclosed_low is not None and rep.disclosed_high is not None:
+                S.formula_cell(ws, f"G{r}", f"=({dlo}+{dhi})/2", S.FMT_PERSHARE)
+            # Our midpoint — live off our low/high cells.
+            if rep.our_low is not None and rep.our_high is not None:
+                S.formula_cell(ws, f"H{r}", f"=({olo}+{ohi})/2", S.FMT_PERSHARE)
+            # Overlap % — |intersection| / |disclosed width|, clamped to [0, 1];
+            # mirrors src.fairness.engine._overlap_pct exactly. A non-None
+            # overlap_pct guarantees all four endpoints are present and the
+            # disclosed width is positive (so the formula's denominator is safe).
+            if rep.overlap_pct is not None:
+                S.formula_cell(
+                    ws,
+                    f"I{r}",
+                    f"=MAX(0,MIN(1,(MIN({dhi},{ohi})-MAX({dlo},{olo}))/({dhi}-{dlo})))",
+                    S.FMT_PERCENT,
+                )
             r += 1
 
     # -- Cover (headline links to the model) ----------------------------------
@@ -699,10 +792,13 @@ def build_verifier_cell_map(model: MergerModelBundle) -> dict[tuple[str, str], f
 
     The verifier recalculates the workbook (via the ``formulas`` library) and
     asserts each of these cells equals the mapped engine value to the cent. Every
-    listed cell is a LIVE FORMULA on a core deal tab that reproduces an engine
-    output: the consideration build + S&U totals, the PPA walk to goodwill, the
-    standalone revenue projections, the per-year pro forma net income / EPS, the
-    accretion/(dilution) %, and the ownership split.
+    listed cell is a LIVE FORMULA that reproduces an engine output: the
+    consideration build + S&U totals, the PPA walk to goodwill, the standalone
+    revenue projections, the per-year pro forma net income / EPS, the
+    accretion/(dilution) %, the ownership split, the Sensitivities grid interior
+    (synergy-column index ≥ 2, a live linear interpolation off the row's two
+    engine-value anchors — exact because A/D is linear in synergies), and the
+    Fairness Comparison disclosed/our midpoints + per-method overlap %.
     """
     m: dict[tuple[str, str], float] = {}
     cons = model.deal.consideration
@@ -746,6 +842,37 @@ def build_verifier_cell_map(model: MergerModelBundle) -> dict[tuple[str, str], f
     # Ownership split.
     m[(SH_CONTRIB, "B14")] = combo.contribution.acquirer_ownership_pct
     m[(SH_CONTRIB, "B15")] = combo.contribution.target_ownership_pct
+
+    # Sensitivities grid interior (synergy-column index ≥ 2): a live linear
+    # interpolation off each row's two anchor columns. A/D is exactly linear in
+    # the synergy run-rate, so the formula reproduces the engine grid to the cent.
+    sens = model.sensitivities
+    if sens is not None:
+        grid = sens.premium_x_synergies
+        top = 6
+        cv = grid.col_values
+        interp_ok = len(cv) >= 2 and (cv[1] - cv[0]) != 0
+        for ridx, row in enumerate(grid.values):
+            rr = top + 1 + ridx
+            if not (interp_ok and row[0] is not None and row[1] is not None):
+                continue
+            for cidx in range(2, len(cv)):
+                gval = row[cidx] if cidx < len(row) else None
+                if gval is not None:
+                    m[(SH_SENS, f"{_col(2 + cidx)}{rr}")] = gval
+
+    # Fairness Comparison: disclosed/our midpoints (cols G/H) + overlap % (col I),
+    # each a live formula off the range-endpoint cells on the same row.
+    fd = model.fairness_differential
+    if fd is not None:
+        for i, rep in enumerate(fd.reproductions):
+            rr = 4 + i
+            if rep.disclosed_low is not None and rep.disclosed_high is not None:
+                m[(SH_FAIR, f"G{rr}")] = (rep.disclosed_low + rep.disclosed_high) / 2.0
+            if rep.our_low is not None and rep.our_high is not None:
+                m[(SH_FAIR, f"H{rr}")] = (rep.our_low + rep.our_high) / 2.0
+            if rep.overlap_pct is not None:
+                m[(SH_FAIR, f"I{rr}")] = rep.overlap_pct
     return m
 
 

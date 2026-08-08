@@ -1,0 +1,10 @@
+date,acquirer,target,ev,ev_revenue,ev_ebitda,premium_pct,source
+2023-11-22,Broadcom,VMware,69000,7.4,20.6,44,"Broadcom/VMware DEFM14A & press release, announced 2022-05-26, closed 2023-11-22; EV ~$69B incl. debt"
+2022-09-15,Adobe,Figma,20000,50.0,,100,"Adobe/Figma press release 2022-09-15 (deal later terminated 2023-12); ~$20B, ~50x ARR"
+2022-10-27,Elon Musk / investors,Twitter,44000,7.3,,38,"Twitter merger proxy 2022; $54.20/share, ~$44B EV"
+2022-01-18,Microsoft,Activision Blizzard,68700,7.9,18.9,45,"Microsoft/Activision DEFM14A, $95.00/share, ~$68.7B EV, closed 2023-10"
+2023-04-27,Qualtrics,Silver Lake/CPPIB,12500,7.0,,,"Qualtrics take-private DEFM14A 2023; $18.15/share, ~$12.5B EV"
+2021-04-15,Thoma Bravo,Proofpoint,12300,10.9,,34,"Proofpoint DEFM14A 2021; $176.00/share, ~$12.3B EV"
+2020-12-01,Salesforce,Slack,27700,26.0,,55,"Salesforce/Slack S-4 2020-2021; ~$27.7B, ~26x revenue"
+2022-03-08,Google,Mandiant,5400,9.0,,53,"Google/Mandiant press release 2022-03-08; $23.00/share, ~$5.4B"
+2016-06-13,Microsoft,LinkedIn,26200,7.2,24.0,50,"Microsoft/LinkedIn merger proxy 2016; $196.00/share, ~$26.2B EV (Qatalyst advised LinkedIn)"
